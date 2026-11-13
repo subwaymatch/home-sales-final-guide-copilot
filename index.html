@@ -19,6 +19,46 @@
       --gold: #d89032;
       --gold-light: #f6e5c7;
       --accent: #bd4d30;
+      --answer-ink: #29444c;
+      --finding-bg: #fff8eb;
+      --chart-grid: #e4ecea;
+      --table-line: #e7eeee;
+      --table-heading: #35535a;
+      --table-highlight: #f3f9f7;
+      --status-bg: #f1f6f5;
+      --error-border: #e5b7a9;
+      --error-bg: #fff4f0;
+      --error-ink: #7c2d1b;
+      --scroll-thumb: #9cb8b5;
+      --scroll-track: #edf3f1;
+      --card-shadow: 0 8px 26px rgb(23 47 58 / 5%);
+    }
+
+    :root[data-theme="dark"] {
+      color-scheme: dark;
+      --ink: #e6f0ee;
+      --muted: #a8bfbb;
+      --line: #365054;
+      --paper: #172a2e;
+      --canvas: #0d1b1e;
+      --teal: #50c4b5;
+      --teal-dark: #7ad6ca;
+      --gold: #f2bd6d;
+      --gold-light: #473922;
+      --accent: #ff8f73;
+      --answer-ink: #d0dfdc;
+      --finding-bg: #392c19;
+      --chart-grid: #365054;
+      --table-line: #30484c;
+      --table-heading: #bfd2ce;
+      --table-highlight: #203a37;
+      --status-bg: #1a3032;
+      --error-border: #925847;
+      --error-bg: #3a2521;
+      --error-ink: #ffc1ad;
+      --scroll-thumb: #587876;
+      --scroll-track: #203537;
+      --card-shadow: 0 8px 26px rgb(0 0 0 / 20%);
     }
 
     * { box-sizing: border-box; }
@@ -34,6 +74,31 @@
       padding: 3.5rem max(1.25rem, calc((100% - 1120px) / 2)) 2.75rem;
       background: #123942;
       color: #f5fbf8;
+    }
+
+    .theme-toggle {
+      display: block;
+      margin: 0 0 1.5rem auto;
+      padding: .5rem .85rem;
+      border: 1px solid #9bd6c9;
+      border-radius: 999px;
+      background: transparent;
+      color: #f5fbf8;
+      font: inherit;
+      font-size: .9rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .theme-toggle:hover,
+    .theme-toggle[aria-pressed="true"] {
+      background: #9bd6c9;
+      color: #123942;
+    }
+
+    .theme-toggle:focus-visible {
+      outline: 3px solid #f6e5c7;
+      outline-offset: 3px;
     }
 
     .eyebrow {
@@ -92,7 +157,7 @@
       border: 1px solid var(--line);
       border-radius: 16px;
       background: var(--paper);
-      box-shadow: 0 8px 26px rgb(23 47 58 / 5%);
+      box-shadow: var(--card-shadow);
     }
 
     .section-kicker {
@@ -116,7 +181,7 @@
     .answer {
       max-width: 850px;
       margin-bottom: 1.3rem;
-      color: #29444c;
+      color: var(--answer-ink);
       font-size: 1.06rem;
     }
 
@@ -127,7 +192,7 @@
       margin: .15rem 0 .4rem;
       padding: .48rem .8rem;
       border-left: 4px solid var(--gold);
-      background: #fff8eb;
+      background: var(--finding-bg);
       color: var(--ink);
       font-weight: 700;
     }
@@ -157,7 +222,7 @@
 
     .chart-scroll {
       margin: 0 -.3rem;
-      scrollbar-color: #9cb8b5 #edf3f1;
+      scrollbar-color: var(--scroll-thumb) var(--scroll-track);
     }
 
     svg.chart {
@@ -172,7 +237,7 @@
     .chart .axis-label { fill: var(--muted); font-size: 12px; }
     .chart .city-label { font-size: 13px; }
     .chart .value-label { font-size: 12px; font-weight: 700; }
-    .chart .grid-line { stroke: #e4ecea; stroke-width: 1; }
+    .chart .grid-line { stroke: var(--chart-grid); stroke-width: 1; }
     .chart .bar { fill: var(--teal); }
     .chart .bar-highlight { fill: var(--accent); }
     .chart .bar-mean { fill: var(--teal); }
@@ -196,32 +261,32 @@
 
     th, td {
       padding: .62rem .75rem;
-      border-bottom: 1px solid #e7eeee;
+      border-bottom: 1px solid var(--table-line);
       text-align: right;
       white-space: nowrap;
     }
 
     th {
-      color: #35535a;
+      color: var(--table-heading);
       font-size: .82rem;
       font-weight: 750;
     }
 
     th:first-child, td:first-child { text-align: left; }
-    tbody tr:first-child { background: #f3f9f7; }
+    tbody tr:first-child { background: var(--table-highlight); }
     tbody tr:first-child td:first-child { font-weight: 750; }
 
     .status, .error {
       padding: .85rem 1rem;
       border-radius: 8px;
-      background: #f1f6f5;
+      background: var(--status-bg);
       color: var(--muted);
     }
 
     .error {
-      border: 1px solid #e5b7a9;
-      background: #fff4f0;
-      color: #7c2d1b;
+      border: 1px solid var(--error-border);
+      background: var(--error-bg);
+      color: var(--error-ink);
     }
 
     footer {
@@ -245,6 +310,7 @@
 </head>
 <body>
   <header class="page-header">
+    <button class="theme-toggle" id="theme-toggle" type="button" aria-pressed="false">Dark mode</button>
     <p class="eyebrow">College-town home sales | Data report</p>
     <h1>What do sale prices look like across college towns?</h1>
     <p class="intro">Two views of home sale prices, calculated directly from the dataset. City means city and state together.</p>
@@ -292,6 +358,13 @@
   </footer>
 
   <script>
+    const themeToggle = document.getElementById("theme-toggle");
+    themeToggle.addEventListener("click", () => {
+      const isDark = document.documentElement.dataset.theme !== "dark";
+      document.documentElement.dataset.theme = isDark ? "dark" : "light";
+      themeToggle.setAttribute("aria-pressed", String(isDark));
+    });
+
     const currencyFormat = new Intl.NumberFormat("en-US", {
       style: "currency",
       currency: "USD",
